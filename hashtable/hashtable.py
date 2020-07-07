@@ -22,6 +22,9 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
+        self.capacity = capacity
+        self.items_stored = 0
+        self.buckets = [None] * capacity
 
 
     def get_num_slots(self):
@@ -35,7 +38,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        return self.capacity
 
     def get_load_factor(self):
         """
@@ -44,6 +47,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        return self.items_stored / self.capacity
 
 
     def fnv1(self, key):
@@ -54,7 +58,22 @@ class HashTable:
         """
 
         # Your code here
+        # 64-bit prime used for calculations
+        FNV_PRIME = 1099511628211
 
+        # 64-bit offset basis used for calculations
+        OFFSET_BASIS = 14695981039346656037
+
+        hash_index = OFFSET_BASIS
+
+        bytes_to_process = key.encode()
+
+        for byte in bytes_to_process:
+
+            hash_index *= FNV_PRIME
+            hash_index ^= byte
+
+        return hash_index
 
     def djb2(self, key):
         """
@@ -63,7 +82,19 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
+        # initialize hash_index as 5381
+        # 5381 is only used for historical purposes
+        hash_index = 5381
 
+        bytes_to_process = key.encode()
+
+        for byte in bytes_to_process:
+
+            # 33 is only used for historical purposes
+            hash_index *= 33
+            hash_index += byte
+
+        return hash_index
 
     def hash_index(self, key):
         """
@@ -82,6 +113,12 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        hash_index = self.hash_index(key)
+
+        # insert into an empty spot
+        if not self.storage[hash_index]:
+            self.storage[hash_index] = HashTableEntry(key, value)
+            self.items_stored += 1
 
 
     def delete(self, key):
