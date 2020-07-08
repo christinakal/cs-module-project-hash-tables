@@ -11,7 +11,7 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
-
+ 
 class HashTable:
     """
     A hash table that with `capacity` buckets
@@ -23,8 +23,7 @@ class HashTable:
     def __init__(self, capacity):
         # Your code here
         self.capacity = capacity
-        self.items_stored = 0
-        self.buckets = [None] * capacity
+        self.data = [None] * capacity
 
 
     def get_num_slots(self):
@@ -38,7 +37,9 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        return self.capacity
+        a = self.capacity
+        print(a)
+        return a
 
     def get_load_factor(self):
         """
@@ -58,22 +59,7 @@ class HashTable:
         """
 
         # Your code here
-        # 64-bit prime used for calculations
-        FNV_PRIME = 1099511628211
-
-        # 64-bit offset basis used for calculations
-        OFFSET_BASIS = 14695981039346656037
-
-        hash_index = OFFSET_BASIS
-
-        bytes_to_process = key.encode()
-
-        for byte in bytes_to_process:
-
-            hash_index *= FNV_PRIME
-            hash_index ^= byte
-
-        return hash_index
+        pass
 
     def djb2(self, key):
         """
@@ -82,19 +68,16 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
-        # initialize hash_index as 5381
+
+        # initialize hash as 5381
         # 5381 is only used for historical purposes
-        hash_index = 5381
 
-        bytes_to_process = key.encode()
+        # copy past code don't really understand what's going on -> ask Melqui
+        hash = 5381     
 
-        for byte in bytes_to_process:
-
-            # 33 is only used for historical purposes
-            hash_index *= 33
-            hash_index += byte
-
-        return hash_index
+        for x in key:
+            hash = (( hash << 5) + hash) + ord(x)
+        return hash & 0xFFFFFFFF
 
     def hash_index(self, key):
         """
@@ -113,12 +96,10 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        hash_index = self.hash_index(key)
 
         # insert into an empty spot
-        if not self.storage[hash_index]:
-            self.storage[hash_index] = HashTableEntry(key, value)
-            self.items_stored += 1
+        i = self.hash_index(key)
+        self.data[i] = value
 
 
     def delete(self, key):
@@ -130,6 +111,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        i = self.hash_index(key)
+        self.data[i] = None
 
 
     def get(self, key):
@@ -141,7 +124,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        i = self.hash_index(key)
+        return self.data[i]
 
     def resize(self, new_capacity):
         """
