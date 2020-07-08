@@ -103,14 +103,14 @@ class HashTable:
         return self.data[i]
 
 
-    # def resize(self, new_capacity):
-    #     """
-    #     Changes the capacity of the hash table and
-    #     rehashes all key/value pairs.
+    def resize(self, new_capacity):
+        """
+        Changes the capacity of the hash table and
+        rehashes all key/value pairs.
 
-    #     Implement this.
-    #     """
-    #     # Your code here
+        Implement this.
+        """
+        # Your code here
 
 
 
@@ -138,6 +138,11 @@ if __name__ == "__main__":
     ht.put("line_10", "Long time the manxome foe he sought--")
     ht.put("line_11", "So rested he by the Tumtum tree")
     ht.put("line_12", "And stood awhile in thought.")
+
+    ht.put("line_13", "13 value")
+    ht.put("line_14", "14 value")
+    ht.put("line_13", "13 value")
+    
 
     print("")
 
