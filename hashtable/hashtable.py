@@ -7,8 +7,6 @@ class HashTableEntry:
         self.value = value
         self.next = None
 
-
-# Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
  
@@ -19,9 +17,7 @@ class HashTable:
 
     Implement this.
     """
-
     def __init__(self, capacity):
-        # Your code here
         self.capacity = capacity
         self.data = [None] * capacity
 
@@ -36,7 +32,6 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
         a = self.capacity
         print(a)
         return a
@@ -47,19 +42,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
         return self.items_stored / self.capacity
 
-
-    def fnv1(self, key):
-        """
-        FNV-1 Hash, 64-bit
-
-        Implement this, and/or DJB2.
-        """
-
-        # Your code here
-        pass
 
     def djb2(self, key):
         """
@@ -67,25 +51,21 @@ class HashTable:
 
         Implement this, and/or FNV-1.
         """
-        # Your code here
-
-        # initialize hash as 5381
-        # 5381 is only used for historical purposes
-
-        # copy past code don't really understand what's going on -> ask Melqui
         hash = 5381     
 
         for x in key:
             hash = (( hash << 5) + hash) + ord(x)
         return hash & 0xFFFFFFFF
 
+
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
+        # return self.fnv1(key) % self.capacity
         return self.djb2(key) % self.capacity
+
 
     def put(self, key, value):
         """
@@ -95,9 +75,6 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
-
-        # insert into an empty spot
         i = self.hash_index(key)
         self.data[i] = value
 
@@ -110,7 +87,6 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
         i = self.hash_index(key)
         self.data[i] = None
 
@@ -123,18 +99,27 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
         i = self.hash_index(key)
         return self.data[i]
 
-    def resize(self, new_capacity):
-        """
-        Changes the capacity of the hash table and
-        rehashes all key/value pairs.
 
-        Implement this.
-        """
-        # Your code here
+    # def resize(self, new_capacity):
+    #     """
+    #     Changes the capacity of the hash table and
+    #     rehashes all key/value pairs.
+
+    #     Implement this.
+    #     """
+    #     # Your code here
+
+
+
+
+
+
+
+
+
 
 
 
